@@ -12,13 +12,24 @@ const videoSchema = new mongoose.Schema({
         required: "Youtube embed Link is required !",
     },
     likedBy: {
-        type: String,
-    }, 
+        type: Array,
+    },
     description: {
         type: String,
-        required: "Title is required",
+        // required: "Title is required",
         minlength: 3,
     },
+    photo: {
+        data: Buffer,
+        contentType: String
+    },
+    postedBy: {
+        type: String
+    },
+    created: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 module.exports = mongoose.model("Video", videoSchema);

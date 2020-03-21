@@ -24,6 +24,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressValidator());
 app.use(cors());
+
+//Routes Middleware
 app.use('/', videoRoutes);
 app.use('/', authRoutes);
 app.use('/', adminRoutes);

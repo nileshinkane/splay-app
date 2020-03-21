@@ -11,7 +11,7 @@ exports.createVideoValidator = (req, res, next) => {
     //description
     req.check("description", "Description cannot be empty").notEmpty()
 
- 
+
     //check for errors
     const errors = req.validationErrors()
     //map through the errors if present

@@ -10,7 +10,8 @@ import Satellite from '@material-ui/icons/SatelliteOutlined';
 import Computer from '@material-ui/icons/ComputerOutlined';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircleOutlined';
 import Divider from '@material-ui/core/Divider';
-
+import isAuthenticated from '../_methods/isAuthenticated';
+import AdminSidebar from '../AdminComponents/AdminSidebar';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -20,13 +21,8 @@ const useStyles = makeStyles(theme => ({
         top: '0%',
         left: '0%',
         height: '100%',
-        // transform: 'translate3d(-110%,-50%,0)',
         [theme.breakpoints.down('sm')]: {
             display: 'none',
-            // height: '100%',
-            // transform: 'translate(0,-50%)',
-            // maxWidth: '240px',
-            // minWidth: '240px',
         },
     },
     paper: {
@@ -67,10 +63,9 @@ function Sidebar() {
         <Box className={classes.root}>
             <div className={classes.paper}>
                 <h2 className={classes.logo}>splay</h2>
-
                 <div className={classes.listBox}>
-                    <h3 style={{ textAlign: 'left', color: "white", fontWeight: '400', }}>Categories</h3>
-                    <Divider style={{ backgroundColor: 'gray' }} />
+                    {/* <h3 style={{ textAlign: 'left', color: "white", fontWeight: '400', }}>Categories</h3> */}
+                    {/* <Divider style={{ backgroundColor: 'gray' }} /> */}
                     <List component="nav" aria-label="main mailbox folders">
                         <ListItem button>
                             <ListItemIcon>
@@ -101,6 +96,11 @@ function Sidebar() {
                         </ListItem>
 
                     </List>
+                    <Divider style={{ backgroundColor: '#7D878E', opacity: '0.8', width: '110%', transform: 'translate(-10%,0)' }} />
+                    {
+                        isAuthenticated() ? (<AdminSidebar />)
+                            : ('')
+                    }
 
                 </div>
 

@@ -1,9 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import { Box } from '@material-ui/core';
-import SearchBox from './helpers/SearchBox';
-import SButton from './helpers/SButton';
+import { Box, Button } from '@material-ui/core';
+import SearchBox from './_generic/SearchBox';
+
+import AdminMenu from './AdminComponents/AdminMenu';
+import isAuthenticated from './_methods/isAuthenticated';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -58,6 +61,7 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('md')]: {
             justifyContent: 'space-between',
         },
+        alignItems: 'center'
     },
     centerLink: {
         display: 'flex',
@@ -67,7 +71,8 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-function Navbar() {
+function Navbar(props) {
+
 
     const classes = useStyles();
 
@@ -77,12 +82,15 @@ function Navbar() {
                 <Box className={classes.navLeft}>
                     <Link to="/" className={classes.logo}>home</Link>
                 </Box>
-                {/*---------*/}
+                {/* -------------------------------------------------- */}
                 <Box className={classes.navRight}>
                     <SearchBox type="text" placeholder="Search" />
-                    <Link className={classes.centerLink} style={{ textDecoration: 'none' }} to="/login">
-                        <SButton>Login</SButton>
-                    </Link>
+                    {
+                        isAuthenticated() ? <AdminMenu /> :
+                            <Link className={classes.centerLink} style={{ textDecoration: 'none' }} to="/login">
+                                <Button variant="text">Login</Button>
+                            </Link>
+                    }
                 </Box>
             </div>
         </React.Fragment>

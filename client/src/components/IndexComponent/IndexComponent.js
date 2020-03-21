@@ -1,16 +1,15 @@
 import React from 'react';
-import SideComponent from '../helpers/SideComponent';
+import SideComponent from '../_generic/SideComponent';
 import { makeStyles } from '@material-ui/core/styles';
-import Banner from '../helpers/Banner';
+import Banner from '../_generic/Banner';
 import BannerImage from '../../images/defaultBanner.jpeg'
 
 // import Gym from '../../images/gym.jpg';
 import Grid from '@material-ui/core/Grid';
 // import PlayArrow from '@material-ui/icons/PlayArrow';
-import { Link } from 'react-router-dom';
-import SButton from '../helpers/SButton';
-
-import VideoSlider from '../helpers/VideoSlider';
+import VideoSlider from '../_generic/VideoSlider';
+import VideoCard from '../_generic/VideoCard';
+// import { Button } from '@material-ui/core';
 
 
 
@@ -70,9 +69,8 @@ const useStyles = makeStyles(theme => ({
         left: '0'
     },
     box: {
-        border: 'solid 1px red', // custom outline, remove after your work
         padding: '5px',
-        outline: 'none', // removes default outline of slick-js boxes
+        outline: 'none',
     },
     card: {
         color: 'black',
@@ -92,49 +90,50 @@ function IndexComponent() {
     return (
         <React.Fragment>
             <SideComponent>
-
                 <Grid container spacing={0}>
                     <Grid item xs={12} style={{ color: 'white' }}>
                         <Banner image={BannerImage}></Banner>
                     </Grid>
                 </Grid>
-                <h3 style={{ color: 'white' }}>Featured</h3>
+                <h3 style={{ color: 'white', display: 'inline-block' }}>Featured</h3>
                 <VideoSlider>
                     <div className={classes.box}>
-                        <div className={classes.card}>1</div>
+                        <VideoCard></VideoCard>
                     </div>
                     <div className={classes.box}>
-                        <div className={classes.card}>2</div>
+                        <VideoCard></VideoCard>
                     </div>
                     <div className={classes.box}>
-                        <div className={classes.card}>3</div>
+                        <VideoCard></VideoCard>
                     </div>
                     <div className={classes.box}>
-                        <div className={classes.card}>4</div>
+                        <VideoCard></VideoCard>
                     </div>
                     <div className={classes.box}>
-                        <div className={classes.card}>5</div>
+                        <VideoCard></VideoCard>
                     </div>
                     <div className={classes.box}>
-                        <div className={classes.card}>6</div>
+                        <VideoCard></VideoCard>
                     </div>
                     <div className={classes.box}>
-                        <div className={classes.card}>7</div>
+                        <VideoCard></VideoCard>
                     </div>
                     <div className={classes.box}>
-                        <div className={classes.card}>8</div>
+                        <VideoCard></VideoCard>
                     </div>
                     <div className={classes.box}>
-                        <div className={classes.card}>9</div>
+                        <VideoCard></VideoCard>
+                    </div>
+                    <div className={classes.box}>
+                        <VideoCard></VideoCard>
                     </div>
                 </VideoSlider>
 
-                <Link to="/login" style={{ textDecoration: 'none' }}>
-                    <SButton yes="true" color="primary">watch now and share</SButton>
-                </Link>
-                <Link to="/login" style={{ textDecoration: 'none' }}>
-                    <SButton color="primary">Test</SButton>
-                </Link>
+                {/* 
+                <Button variant="contained" >Contained</Button>
+
+                <Button variant="text">Text Button</Button> */}
+
 
             </SideComponent>
         </React.Fragment>

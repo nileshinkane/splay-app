@@ -5,11 +5,11 @@ import L from '../../images/L.jpg';
 
 
 
-
 const useStyles = makeStyles(theme => ({
     bannerRoot: {
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        padding: '8px'
     },
     bannerImage: {
         objectFit: 'cover',

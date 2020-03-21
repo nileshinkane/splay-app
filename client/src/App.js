@@ -1,44 +1,32 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
-
-import IndexComponent from './components/IndexComponent/IndexComponent';
 import BottomNav from './components/BottomNav';
-import Sidebar from './components/Sidebar';
-// import VideoPlay from './components/VideoPlay';
-import AdminLogin from './components/AdminLogin';
-import SideComponent from './components/helpers/SideComponent';
-import AdminPanel from './components/AdminPanel.js/AdminPanel';
-// import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import Sidebar from './components/Sidebar/Sidebar';
+import { AdminContext } from './Contexts/AdminContext';
 
-// const theme = createMuiTheme({
-//   palette: {
-//     primary: indigo,
-//     secondary: pink,
-//     error: red,
-//     contrastThreshold: 3,
-//     tonalOffset: 0.2,
-//   },
-// });
+import Routes from './routes/index';
+import { SnackbarContext } from './Contexts/SnackbarContext';
+
 
 function App() {
+  const getAdmin = () => localStorage.getItem('jwt') ? JSON.parse(localStorage.getItem('jwt')) : null
+  const [admin, setAdmin] = useState(getAdmin())
+  const [snackbar, setSnackbar] = useState(null)
+
   return (
     <div className="App">
       <Router>
         <div>
-          <Route path="/" component={Navbar} />
-          <Route path="/" component={Sidebar} />
-          <Route path="/" component={BottomNav} />
-
-          <Switch>
-            <Route exact path="/" component={IndexComponent} />
-            <Route exact path="/login" component={AdminLogin} />
-            <Route exact path="/adminPanel" component={AdminPanel} />
-            {/* <Route exact path="/video" component={VideoPlay} /> */}
-            <Route path="/cse" component={Cse} />
-            <Route path="/it" component={It} />
-          </Switch>
+          <AdminContext.Provider value={{ admin, setAdmin }}>
+            <SnackbarContext.Provider value={{ snackbar, setSnackbar }}>
+              <Navbar />
+              <Sidebar />
+              <BottomNav />
+              <Routes />
+            </SnackbarContext.Provider>
+          </AdminContext.Provider>
         </div>
       </Router>
 
@@ -47,17 +35,5 @@ function App() {
 }
 
 
-const Cse = () => {
-  return (
-    <SideComponent>
-      <div style={{ color: 'white' }}>This is CSE</div>
-    </SideComponent>
-  )
-}
-const It = () => {
-  return (
-    <div>This is It</div>
-  )
-}
 
 export default App;

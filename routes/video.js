@@ -10,7 +10,8 @@ const router = express.Router();
 // router.get('/', videoController.getVideos);
 router.get('/', videoController.getRecommendations);
 router.get('/hello', testController.getTestOne);
-router.post('/video', validator.createVideoValidator, videoController.createVideo);
+router.post('/getSearchedVideos', videoController.getSearchedVideos);
+router.post('/submitVideo', videoController.createVideo);
 
 
 

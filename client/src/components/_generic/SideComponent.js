@@ -6,8 +6,8 @@ const useStyles = makeStyles(theme => ({
 
     root: {
         marginLeft: ' 0px ',
-        padding: '0',
         minHeight: '90vh',
+        padding: '30px 20px 20px 20px',
         [theme.breakpoints.up('md')]: {
             marginLeft: '240px',
             padding: '30px 20px 20px 20px',

@@ -34,6 +34,10 @@ input {
   color: white !important;
 }
 
+.slick-dots li button:before{
+    color: gray !important;
+  }
+
 .iframe-container iframe {
   position: absolute;
   top: 0;
@@ -43,7 +47,7 @@ input {
 }
 
 
- label.Mui-focused {
+ /* label.Mui-focused {
     color: #426dd1 !important;
 };
  .MuiInput-underline:after {
@@ -65,7 +69,7 @@ input {
 .MuiInputLabel-formControl {
   color: lightgray !important;
 }
-
+ */
 
 
 

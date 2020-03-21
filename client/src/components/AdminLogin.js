@@ -1,15 +1,15 @@
-import React from 'react';
-import SideComponent from './helpers/SideComponent';
+import React, { useContext } from 'react';
+import SideComponent from './_generic/SideComponent';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, TextField, FormControl, InputLabel, InputAdornment, IconButton, OutlinedInput } from '@material-ui/core';
+import { Paper, TextField, FormControl, InputLabel, InputAdornment, IconButton, OutlinedInput, Button } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import SButton from '../components/helpers/SButton';
 import adminLoginImage from '../images/admin-login.svg';
 import { Redirect } from 'react-router-dom';
-import SSnackbar from './helpers/Snackbar';
+import CustomSnackbar from './_generic/Snackbar';
+import { AdminContext } from '../Contexts/AdminContext';
 
 
 const useStyles = makeStyles(theme => ({
@@ -17,13 +17,13 @@ const useStyles = makeStyles(theme => ({
         height: '60vh',
         width: '50vw',
         [theme.breakpoints.down('sm')]: {
-            width: '70vw',
+            width: '75vw',
             height: '40vh',
         },
-        backgroundColor: '#3D4153',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: '20px 0'
     },
     imageBox: {
         flex: '2',
@@ -67,6 +67,9 @@ const useStyles = makeStyles(theme => ({
 
 const AdminLogin = (props) => {
     const classes = useStyles();
+
+    const { setAdmin } = useContext(AdminContext);
+
     const [values, setValues] = React.useState({
         username: "",
         password: "",
@@ -96,37 +99,14 @@ const AdminLogin = (props) => {
     }
 
 
-    const handleSubmit = event => {
-        event.preventDefault();
-        setValues({ loading: true })
-        const { username, password } = values;
-        const admin = {
-            username,
-            password
-        }
-        setTimeout(() => {
-            signin(admin).then(data => {
-                if (data.error) {
-                    setValues({ error: data.error, loading: false });
-                }
-                else {
-                    authenticate(data, () => {
-                        setValues({ redirect: true })
-                    })
-                }
-            })
-        }, 1000);
-
-    };
-
-    const signin = admin => {
+    const signin = adminParam => {
         return fetch("http://localhost:5000/signin", {
             method: "POST",
             headers: {
                 Accept: "application/json",
                 "Content-type": "application/json"
             },
-            body: JSON.stringify(admin)
+            body: JSON.stringify(adminParam)
         })
             .then(response => {
                 return response.json();
@@ -137,6 +117,33 @@ const AdminLogin = (props) => {
     }
 
 
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        const { username, password } = values;
+        setValues({ loading: true })
+        const adminCredentials = {
+            username,
+            password
+        }
+        // setTimeout(() => {
+        signin(adminCredentials).then(data => {
+            if (data.error) {
+                setValues({ error: data.error, loading: false });
+            }
+            else {
+                authenticate(data, () => {
+                    setAdmin(data)
+                    setValues({ redirect: true })
+                })
+            }
+        })
+        // });
+
+    };
+
+
+
     //Render the Components - AdminLogin or Profile Page
     if (values.redirect) {
         return <Redirect to="/adminPanel"></Redirect>
@@ -144,7 +151,7 @@ const AdminLogin = (props) => {
 
     return (
         <SideComponent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Paper className={classes.root}>
+            <Paper variant="outlined" className={classes.root}>
                 <div className={classes.imageBox}>
                     <img alt="splay login" src={adminLoginImage} style={{ width: '80%', height: '80%' }} />
                 </div>
@@ -158,14 +165,12 @@ const AdminLogin = (props) => {
                                 label="Username"
                                 value={values.username || ''}
                                 onChange={handleChange('username')}
-                                className={classes.white}
                                 required={true}
                             />
-
                         </FormControl>
 
                         <FormControl variant="outlined" style={{ width: '100%' }}>
-                            <InputLabel className={classes.white} htmlFor="outlined-adornment-password">Password</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-password"
                                 type={values.showPassword ? 'text' : 'password'}
@@ -188,13 +193,13 @@ const AdminLogin = (props) => {
                             />
                         </FormControl>
                         {values.loading ?
-                            <CircularProgress /> :
-                            <SButton type="submit" onClick={handleSubmit} style={{ width: '100%', padding: '10px 20px' }} yes="true">Login</SButton>
+                            <CircularProgress color="primary" /> :
+                            <Button variant="contained" type="submit" onClick={handleSubmit} style={{ width: '100%', padding: '10px 20px' }} yes="true">Login</Button>
                         }
                     </form>
                 </div>
             </Paper>
-            {values.error ? <SSnackbar severity="error" message={values.error} /> : ''}
+            {values.error ? <CustomSnackbar severity="error" message={values.error} /> : ''}
         </SideComponent>
     );
 }

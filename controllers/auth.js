@@ -32,7 +32,7 @@ exports.signin = (req, res) => {
         // if admin is found, the username and passwords are verified via authenticate method in model
         if (!admin.authenticate(password)) {
             return res.status(401).json({
-                error: "username and passwords do not match !"
+                error: "Username and Password do not match !"
             })
         }
         //generate a token with admin id and secret
@@ -54,9 +54,7 @@ exports.signout = (req, res) => {
 }
 
 exports.requireSignin = expressJwt({
-
     // if the token is valid, expressjwt appends the verified admin id in an auth key to the request object
-
     secret: process.env.JWT_SECRET,
     adminProperty: "adminAuth"
 })
