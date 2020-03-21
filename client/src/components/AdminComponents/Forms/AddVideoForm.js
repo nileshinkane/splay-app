@@ -50,6 +50,11 @@ export default function AddVideoForm () {
     
     useEffect(()=>{
         videoData = new FormData();
+
+        return ()=>{
+            console.log('Snackbar Cleaned !')
+            setSnackbar('')
+        }
     },[])
 
     const isValid = () => {
