@@ -21,6 +21,10 @@ const theme = createMuiTheme({
             text: {
                 background: 'transparent',
                 color: 'lightgray'
+            },
+            sizeSmall: {
+                fontSize: '12px',
+                padding: '2px 4px'
             }
         },
 

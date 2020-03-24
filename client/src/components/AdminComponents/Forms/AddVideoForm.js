@@ -45,14 +45,10 @@ export default function AddVideoForm () {
             fileSize: 0,
     });
 
-    
-
-    
     useEffect(()=>{
         videoData = new FormData();
 
         return ()=>{
-            console.log('Snackbar Cleaned !')
             setSnackbar('')
         }
     },[])

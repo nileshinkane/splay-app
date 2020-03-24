@@ -56,8 +56,8 @@ const VideoCard = (props) => {
                 </Fab>
             </div>
             <div className={classes.footer}>
-                <Typography style={{ padding: '0 10px' }} variant="subtitle1" noWrap>{props.title || 'This is a temporary title for a temporary video'}</Typography>
-                <Typography style={{ color: 'gray', padding: '0 10px' }} variant="subtitle2" noWrap>{props.postedBy || 'By Nilesh Inkane'}</Typography>
+                <Typography style={{ padding: '8px 10px' }} variant="subtitle1" noWrap>{props.title || 'This is a temporary title for a temporary video'}</Typography>
+                <Typography style={{ color: 'gray', padding: '0 10px' }} variant="subtitle2" noWrap>{props.postedBy || 'By Admin'}</Typography>
             </div>
         </div>
     );

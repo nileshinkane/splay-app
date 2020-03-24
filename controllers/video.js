@@ -73,3 +73,7 @@ exports.createVideo = (req, res, next) => {
 
     })
 }
+
+exports.deleteVideo = (req, res) => {
+
+}
