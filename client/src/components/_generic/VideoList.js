@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Paper, Button } from '@material-ui/core'
 import VideoCard from './VideoCard';
 import { makeStyles } from '@material-ui/core/styles';
@@ -60,9 +60,13 @@ const VideoList = (props) => {
     })
     const [title, setTitle] = useState("")
 
-
-
     const classes = useStyles()
+
+    useEffect(() => {
+        return () => {
+            setSnackbar('')
+        }
+    }, [setSnackbar])
 
     const inputParam = {
         title
@@ -88,14 +92,11 @@ const VideoList = (props) => {
                     return response.json()
                 })
                 .then((data) => {
-                    // setTimeout(() => {
                     setVideos({
                         ...videos,
                         skeleton: false,
                         data: data
                     })
-                    // }, 2000);
-
                 })
                 .catch((err) => {
                     console.log(err)
@@ -119,6 +120,18 @@ const VideoList = (props) => {
             ...videos,
             data: newItems
         })
+        fetch(`${process.env.REACT_APP_API_URL}/video/delete/${videos.id}`, {
+            method: 'DELETE'
+        })
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                setSnackbar({ ...snackbar, msg: 'Video deleted Sucessfully', severity: 'success', date: new Date() })
+            })
+            .catch((err) => {
+                setSnackbar({ ...snackbar, msg: err, severity: 'error', date: new Date() })
+            })
         setDialog(false)
     }
     const handleDialog = (e, key) => {
@@ -128,6 +141,11 @@ const VideoList = (props) => {
             id: key,
             target: e.target.parentNode.parentNode.parentNode
         })
+    }
+
+    const photoUrl = (id, photo) => {
+        const thumb = `${process.env.REACT_APP_API_URL}/video/photo/${id}`;
+        return photo ? thumb : gym
     }
 
 
@@ -141,7 +159,9 @@ const VideoList = (props) => {
                             videos.data.map((current) =>
                                 <div key={current._id} className={classes.videoListStyle}>
                                     <Paper style={{ marginTop: '20px' }}>
-                                        <VideoCard style={{ width: '300px' }} thumbnail={gym} title={current.title} />
+                                        <VideoCard
+                                            style={{ width: '300px' }}
+                                            thumbnail={photoUrl(current._id, current.photo) || gym} title={current.title} />
                                     </Paper>
                                     <div className={classes.editStyles}>
                                         <Button style={{ backgroundColor: theme.palette.primary.main }} size="small">Edit</Button>
@@ -172,7 +192,7 @@ const VideoList = (props) => {
             }
 
             {
-                snackbar ? <CustomSnackbar key={snackbar.date} severity="error" message="Really ??" /> : ''
+                snackbar ? <CustomSnackbar key={snackbar.date} severity={snackbar.severity} msg={snackbar.msg} /> : ''
             }
         </SideComponent >
     )

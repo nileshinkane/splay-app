@@ -38,7 +38,7 @@ export default function CustomSnackbar(props) {
                     }}
                 >
                     <Alert onClose={handleClose} severity={props.severity}>
-                        {props.message}
+                        {props.msg}
                     </Alert>
                 </Snackbar>
             </div>

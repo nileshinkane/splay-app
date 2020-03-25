@@ -51,24 +51,21 @@ export default function AddVideoForm () {
         return ()=>{
             setSnackbar('')
         }
-    },[])
+    },[setSnackbar])
 
     const isValid = () => {
         const { title, description, fileSize, link } = state;
         if (fileSize > 100000) {
-            // callSnackbar("Thumbnail size should be less than 100kb", "warning")
             setSnackbar({...snackbar, date: new Date(), msg : 'Thumbnail size should be less than 100kb', severity : 'warning'})
             return false;
         }
 
         if (title.length === 0 || description.length === 0) {
-            // callSnackbar("Title and Description are required", "error")
             setSnackbar({ ...snackbar, date: new Date(), msg: 'Title and Description are needed !', severity: 'error' })
             return false;
         }
 
         if (link.length === 0 ) {
-            // callSnackbar("Youtube Embed Link is required", "error")
             setSnackbar({ ...snackbar, date: new Date(), msg: 'Youtube embed link required !', severity: 'error' })
             return false;
         }
@@ -138,7 +135,6 @@ export default function AddVideoForm () {
             })
 
             submitVideo(videoData).then((data) => {
-                // callSnackbar("Video Uploaded", "success")
                 setSnackbar({ ...snackbar, date: new Date(), msg: 'Video Uploaded', severity: 'success' })
             })
             .catch(()=> {
@@ -187,7 +183,7 @@ export default function AddVideoForm () {
                         )}
                 </div>
                 {
-                        snackbar ? <CustomSnackbar key={snackbar.date} variant="outlined" severity={snackbar.severity} message={snackbar.msg} /> : ''
+                        snackbar ? <CustomSnackbar key={snackbar.date} variant="outlined" severity={snackbar.severity} msg={snackbar.msg} /> : ''
                 } 
             </div>
             </SideComponent>
@@ -215,9 +211,6 @@ const submitVideo = videoParam => {
             console.log(err)
         })
 }
-
-
-
 
 
 function TitleAndDesc(props) {
