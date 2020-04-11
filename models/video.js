@@ -19,6 +19,17 @@ const videoSchema = new mongoose.Schema({
         // required: "Title is required",
         minlength: 3,
     },
+    department: {
+        type: String
+    },
+    featured: {
+        type: Boolean,
+        default: false
+    },
+    departmentFeatured: {
+        type: Boolean,
+        default: false
+    },
     photo: {
         data: Buffer,
         contentType: String

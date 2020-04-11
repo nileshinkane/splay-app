@@ -60,6 +60,12 @@ const theme = createMuiTheme({
                 },
             },
         },
+        //Menu
+        MuiMenu: {
+            paper: {
+                backgroundColor: customPalette.elevation.elevation1
+            }
+        },
         //Stepper
         MuiStepper: {
             root: {
@@ -72,6 +78,12 @@ const theme = createMuiTheme({
         MuiStepLabel: {
             root: {
 
+            }
+        },
+        //Typography
+        MuiTypography: {
+            root: {
+                color: 'white'
             }
         },
         //Paper

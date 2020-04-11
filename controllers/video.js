@@ -50,17 +50,21 @@ exports.getRecommendations = (req, res) => {
 
 exports.getSearchedVideos = (req, res) => {
     const { title } = req.body;
-    // res.send(title)
+    const start = parseInt(req.params.start);
+    Video
+        .find({ "title": { '$regex': title, '$options': 'i' } })
+        .sort({ 'created': -1 })
+        .skip(start)
+        .limit(6)
+        .exec(function (err, videos) {
+            if (err) {
+                return res.status(400).json({
+                    error: err
+                })
+            }
+            res.status(200).json(videos)
+        })
 
-    Video.find({ "title": { '$regex': title, '$options': 'i' } }, (err, videos) => {
-        if (err) {
-            return res.status(400).json({
-                error: err
-            })
-        }
-        // res.send('egse')
-        res.json(videos)
-    })
 }
 
 
@@ -71,9 +75,9 @@ exports.createVideo = (req, res, next) => {
 
     form.parse(req, (err, fields, files) => {
         if (err) {
-            // return res.status(400).json({
-            //     error: 'Image could not be uploaded'
-            // })
+            return res.status(400).json({
+                error: 'Image could not be uploaded'
+            })
             next(err)
         }
 

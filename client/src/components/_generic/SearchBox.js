@@ -54,7 +54,13 @@ const SearchBox = (props) => {
             <form className={props.className}>
                 <Box className={clsx(classes.inputBox, props.className)}>
                     <SearchIcon className={classes.searchIcon} />
-                    <input onChange={props.handleChange} className={classes.input} type={props.type} placeholder={props.placeholder} />
+                    <input id="mm" onChange={props.handleChange}
+                        className={classes.input}
+                        type={props.type}
+                        placeholder={props.placeholder}
+                        onFocus={props.onFocus}
+                        value={props.value}
+                    />
                 </Box>
             </form>
         </div>

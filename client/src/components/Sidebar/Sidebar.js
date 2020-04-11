@@ -5,13 +5,15 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import LocalHospital from '@material-ui/icons/LocalHospitalOutlined';
+import PowerIcon from '@material-ui/icons/Power';
 import Satellite from '@material-ui/icons/SatelliteOutlined';
 import Computer from '@material-ui/icons/ComputerOutlined';
-import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircleOutlined';
+import BuildIcon from '@material-ui/icons/Build';
+import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import Divider from '@material-ui/core/Divider';
 import isAuthenticated from '../_methods/isAuthenticated';
 import AdminSidebar from '../AdminComponents/AdminSidebar';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -53,8 +55,14 @@ const useStyles = makeStyles(theme => ({
         color: 'lightgray',
         fontSize: '24px'
     },
+    linkStyles: {
+        textDecoration: 'none',
+        color: 'inherit',
+        padding: 0
+    }
 
 }));
+
 
 
 function Sidebar() {
@@ -67,33 +75,51 @@ function Sidebar() {
                     {/* <h3 style={{ textAlign: 'left', color: "white", fontWeight: '400', }}>Categories</h3> */}
                     {/* <Divider style={{ backgroundColor: 'gray' }} /> */}
                     <List component="nav" aria-label="main mailbox folders">
-                        <ListItem button>
-                            <ListItemIcon>
-                                <LocalHospital className={classes.icon} />
-                            </ListItemIcon>
-                            <ListItemText primary="Health" />
-                        </ListItem>
+                        <Link className={classes.linkStyles} to="/dept/cseit">
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <Computer className={classes.icon} />
+                                </ListItemIcon>
+                                <ListItemText primary="Cse & IT" />
+                            </ListItem>
+                        </Link>
 
-                        <ListItem button>
-                            <ListItemIcon>
-                                <Satellite className={classes.icon} />
-                            </ListItemIcon>
-                            <ListItemText primary="Communication" />
-                        </ListItem>
+                        <Link className={classes.linkStyles} to="/dept/electronics">
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <Satellite className={classes.icon} />
+                                </ListItemIcon>
+                                <ListItemText primary="Electronics" />
+                            </ListItem>
+                        </Link>
 
-                        <ListItem button>
-                            <ListItemIcon>
-                                <Computer className={classes.icon} />
-                            </ListItemIcon>
-                            <ListItemText primary="Computer & IT" />
-                        </ListItem>
+                        <Link className={classes.linkStyles} to="/dept/electrical">
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <PowerIcon className={classes.icon} />
+                                </ListItemIcon>
+                                <ListItemText primary="Electrical" />
+                            </ListItem>
+                        </Link>
 
-                        <ListItem button>
-                            <ListItemIcon>
-                                <SupervisedUserCircleIcon className={classes.icon} />
-                            </ListItemIcon>
-                            <ListItemText primary="Management" />
-                        </ListItem>
+                        <Link className={classes.linkStyles} to="/dept/mechanical">
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <BuildIcon className={classes.icon} />
+                                </ListItemIcon>
+                                <ListItemText primary="Mechnical" />
+                            </ListItem>
+                        </Link>
+
+                        <Link className={classes.linkStyles} to="/dept/ash">
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <EmojiObjectsIcon className={classes.icon} />
+                                </ListItemIcon>
+                                <ListItemText primary="Applied Sciences and Humanities" />
+                            </ListItem>
+                        </Link>
+
 
                     </List>
                     <Divider style={{ backgroundColor: '#7D878E', opacity: '0.8', width: '110%', transform: 'translate(-10%,0)' }} />

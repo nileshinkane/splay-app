@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import BottomNav from './components/BottomNav';
@@ -20,16 +20,17 @@ function App() {
   const [dialog, setDialog] = useState(false)
 
   return (
-    <div className="App">
+    <div className="App" style={{ paddingBottom: '20px' }}>
       <Router>
         <div>
           <AdminContext.Provider value={{ admin, setAdmin }}>
             <SnackbarContext.Provider value={{ snackbar, setSnackbar }}>
               <DialogBoxContext.Provider value={{ dialog, setDialog }}>
-                <Navbar />
                 <Sidebar />
                 <BottomNav />
-                <Routes />
+                <Switch>
+                  <Routes />
+                </Switch>
               </DialogBoxContext.Provider>
             </SnackbarContext.Provider>
           </AdminContext.Provider>

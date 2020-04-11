@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 
 //Import Components here
@@ -12,18 +12,25 @@ import VideoPlay from '../components/VideoPlay';
 import AddVideoForm from '../components/AdminComponents/Forms/AddVideoForm';
 import SideComponent from '../components/_generic/SideComponent';
 import VideoList from '../components/_generic/VideoList';
+import Department from '../components/Department/Department'
+import Navbar from '../components/Navbar';
+import VideoCard from '../components/_generic/VideoCard';
+import Search from '../components/Search';
 
 // import PrivateRoute from '../components/_generic/PrivateRoute'
 
 
 const Routes = () => {
     return (
-        <Switch>
+        <>
+            <Route to="/" component={Navbar} />
             <Route exact path="/" component={IndexComponent} />
             <Route exact path="/login" component={AdminLogin} />
-            <Route path="/cse" component={Cse} />
             <Route path="/v" component={VideoPlay} />
             <Route path="/it" component={It} />
+            <Route path="/dept/:deptName" component={Department} />
+            <Route path="/search" component={Search} />
+
 
             <PrivateRoute exact path="/adminPanel">
                 <AdminPanel />
@@ -35,7 +42,7 @@ const Routes = () => {
             <PrivateRoute exact path="/videoList">
                 <VideoList />
             </PrivateRoute>
-        </Switch>
+        </>
     )
 }
 
@@ -43,15 +50,17 @@ export default Routes;
 
 
 
-const Cse = () => {
+const Seach = (props) => {
     return (
         <SideComponent>
-            <div style={{ color: 'white' }}>This is CSE</div>
+            <div style={{ color: 'white' }}>{props.match.params.passed.split("+").join(" ")}</div>
         </SideComponent>
     )
 }
 const It = () => {
     return (
-        <div>This is It</div>
+        <SideComponent>
+            <VideoCard type="long" />
+        </SideComponent>
     )
 }

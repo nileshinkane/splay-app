@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         zIndex: '199',
         position: 'fixed',
+        // height: '40px',
         backgroundColor: '#252C48',
         bottom: '0',
         borderTop: 'solid #252C48 1px',

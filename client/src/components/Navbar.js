@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import { Box, Button } from '@material-ui/core';
-import SearchBox from './_generic/SearchBox';
+import { Box, Button, IconButton } from '@material-ui/core';
+// import SearchBox from './_generic/SearchBox';
+import SearchIcon from '@material-ui/icons/Search';
 
 import AdminMenu from './AdminComponents/AdminMenu';
 import isAuthenticated from './_methods/isAuthenticated';
@@ -56,11 +57,8 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flex: '8',
         flexDirection: 'row',
-        justifyContent: 'flex-end',
         color: 'black',
-        [theme.breakpoints.down('md')]: {
-            justifyContent: 'space-between',
-        },
+        justifyContent: 'flex-end',
         alignItems: 'center'
     },
     centerLink: {
@@ -84,7 +82,19 @@ function Navbar(props) {
                 </Box>
                 {/* -------------------------------------------------- */}
                 <Box className={classes.navRight}>
-                    <SearchBox type="text" placeholder="Search" />
+                    <Link to="/search" style={{ textDecoration: 'none' }}>
+                        {
+                            window.innerWidth < 500 ? (
+                                <IconButton aria-label="search" size="small">
+                                    <SearchIcon style={{ fontWeight: '800' }} />
+                                </IconButton>
+                            ) : (
+                                    <Button
+                                        startIcon={<SearchIcon />}
+                                    >
+                                        Search
+                                    </Button>)}
+                    </Link>
                     {
                         isAuthenticated() ? <AdminMenu /> :
                             <Link className={classes.centerLink} style={{ textDecoration: 'none' }} to="/login">

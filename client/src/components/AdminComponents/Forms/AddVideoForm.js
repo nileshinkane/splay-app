@@ -3,12 +3,24 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import { Paper, FormControl, TextField } from '@material-ui/core';
+import { 
+        Paper, 
+        FormControl, 
+        TextField, 
+        InputLabel, 
+        MenuItem, 
+        FormControlLabel,
+        Checkbox,
+        Select, 
+        Typography,
+        FormGroup
+    } from '@material-ui/core';
 import VideoCard from '../../_generic/VideoCard';
 import CustomSnackbar from '../../_generic/Snackbar';
 import SideComponent from '../../_generic/SideComponent';
 import { SnackbarContext } from '../../../Contexts/SnackbarContext';
-// import callSnackbar from '../../_methods/callSnackbar';
+
+
 
 
 function getSteps() {
@@ -37,11 +49,14 @@ export default function AddVideoForm () {
     const [state, setState] = useState ({
             activeStep: 0,
             title: '',
+            department : '',
             link: '',
             description: '',
             photo: '',
             postedBy: '',
             imagePreview: '',
+            featured : false,
+            departmentFeatured : false,
             fileSize: 0,
     });
 
@@ -80,7 +95,7 @@ export default function AddVideoForm () {
                 )
             case 1:
                 return (
-                    <LinkAndThumb inputValues={state} handleChange={handleChange} />
+                    <LinkAndThumb inputValues={state} handleCheckbox={handleCheckbox} handleChange={handleChange} />
                 )
             case 2:
                 return (
@@ -89,6 +104,11 @@ export default function AddVideoForm () {
             default:
                 return 'Unknown Step';
         }
+    }
+
+    const handleCheckbox = name => e => {
+        setState({ ...state, [e.target.name]: e.target.checked });
+        videoData.set(name, e.target.checked)
     }
 
     const handleChange = name => e => {
@@ -131,9 +151,9 @@ export default function AddVideoForm () {
             setState({
                 ...state,
                 activeStep: 0,title: '', link: '', description: '',
-                photo: '',postedBy: '',imagePreview: '',error: '',
+                photo: '',postedBy: '',imagePreview: '',error: '', featured:false, departmentFeatured:false
             })
-
+            console.log(videoData)
             submitVideo(videoData).then((data) => {
                 setSnackbar({ ...snackbar, date: new Date(), msg: 'Video Uploaded', severity: 'success' })
             })
@@ -146,7 +166,8 @@ export default function AddVideoForm () {
 
         return (
             <SideComponent>
-            <div style={{ width: '80%', margin: 'auto' }}>
+            <Typography variant="h4" align="center" style={{color:"white"}} gutterBottom={true}>Add a video</Typography>    
+            <div style={{ width: '90%', margin: 'auto' }}>
                 <Stepper activeStep={state.activeStep} alternativeLabel>
                     {steps.map(label => (
                         <Step key={label}>
@@ -161,7 +182,7 @@ export default function AddVideoForm () {
                         </div>
                     ) : (
                             <div>
-                                <Paper style={paperStyles} elevation={1}  >
+                                <Paper style={paperStyles} elevation={1} >
                                     <form encType="multipart/form-data">
                                         {getStepContent(state.activeStep)}
                                     </form>
@@ -227,6 +248,24 @@ function TitleAndDesc(props) {
                     required={true}
                 />
             </FormControl>
+            <FormControl variant="outlined" style={{width: '100%', marginTop:'25px'}} >
+                <InputLabel id="demo-simple-select-outlined-label">
+                    Department
+                </InputLabel>
+                <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={props.inputValues.department || 'misc'}
+                    onChange={props.handleChange('department')}
+                >
+                    <MenuItem value="misc">Misc</MenuItem>
+                    <MenuItem value='cseit'>Cse/IT</MenuItem>
+                    <MenuItem value='extc'>Electronics</MenuItem>
+                    <MenuItem value='elpo'>Electrical</MenuItem>
+                    <MenuItem value='mech'>Mechanical</MenuItem>
+                    <MenuItem value='ash'>Applied Science and Humanities</MenuItem>
+                </Select>
+            </FormControl>
             <FormControl variant="outlined" style={{ width: '100%', marginTop: '50px' }}>
                 <TextField
                     variant="outlined"
@@ -277,6 +316,18 @@ function LinkAndThumb(props) {
                     onChange={props.handleChange('photo')}
                     type="file"
                 />
+
+                <FormGroup row>
+                    <FormControlLabel
+                        control={<Checkbox color="primary" checked={props.inputValues.featured} onChange={props.handleCheckbox('featured')} name="featured" />}
+                        label="Featured"
+                    /> <FormControlLabel
+                        control={<Checkbox color="primary" checked={props.inputValues.departmentFeatured} onChange={props.handleCheckbox('departmentFeatured')} name="departmentFeatured" />}
+                        label="Department Featured"
+                    />
+                </FormGroup>
+                
+
                 <label htmlFor="contained-button-file" style={{ display: 'inline-block' }}>
                     <Button variant="contained" color="primary" component="span">
                         Upload Thumbnail
@@ -297,8 +348,14 @@ function DemoCard(props) {
                 props.inputValues.imagePreview ?
                     (
                         <>
-                            <p style={{ fontSize: '0.8rem', color: 'gray' }}>If your thumbnail is shorter than the silver रेखा or not as expected, do change the picture you're using and make it 16:9 ratio</p>
-                            <VideoCard thumbnailStyle={{ border: 'solid 1px silver' }} style={{ width: '300px', margin: 'auto' }} title={props.inputValues.title} thumbnail={props.inputValues.imagePreview} />
+                            <p style={{ fontSize: '0.8rem', color: 'gray' }}>If your thumbnail is shorter than the silver line or not as expected, do change the image you're using and make it 16:9 ratio</p>
+                            <VideoCard 
+                                thumbnailStyle={{ border: 'solid 1px silver' }} 
+                                style={{ width: '300px', margin: 'auto' }} 
+                                title={props.inputValues.title} 
+                                thumbnail={props.inputValues.imagePreview} 
+                                postedBy={props.inputValues.postedBy}
+                            />
                         </>
                     ) :
                     (

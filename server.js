@@ -16,6 +16,7 @@ const app = express();
 const videoRoutes = require('./routes/video');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+const deptRoutes = require('./routes/department');
 
 
 
@@ -29,6 +30,7 @@ app.use(cors());
 app.use('/', videoRoutes);
 app.use('/', authRoutes);
 app.use('/', adminRoutes);
+app.use('/', deptRoutes);
 app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
         res.status(401).json({ error: 'Access Denied !' });
