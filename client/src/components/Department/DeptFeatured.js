@@ -78,6 +78,7 @@ function DeptFeatured(props) {
     const classes = useStyles();
 
 
+
     const photoUrl = (id, photo) => {
         const thumb = `${process.env.REACT_APP_API_URL}/video/photo/${id}`;
         return photo ? thumb : gym

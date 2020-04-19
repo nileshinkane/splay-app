@@ -1,8 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Fab, Paper } from '@material-ui/core';
+import { Typography, Fab } from '@material-ui/core';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import fakeImg from '../../images/gym.jpg'
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -133,10 +134,12 @@ const VideoCard = (props) => {
             <div className={classes.rootLong}>
                 <div className={classes.leftLong}>
                     <div style={{ paddingTop: '56.25%', position: 'relative', width: '100%', overflow: 'hidden' }}>
-                        <img src={props.thumbnail || fakeImg} className={classes.imgLong} />
-                        <Fab size="small" className={classes.fabLong}>
-                            <PlayArrow />
-                        </Fab>
+                        <img src={props.thumbnail || fakeImg} className={classes.imgLong} alt="thumbnail" />
+                        <Link to={`/videoPlay/${props.id}`}>
+                            <Fab size="small" className={classes.fabLong}>
+                                <PlayArrow />
+                            </Fab>
+                        </Link>
                     </div>
                 </div>
                 <div className={classes.rightLong}>
@@ -159,9 +162,11 @@ const VideoCard = (props) => {
         <div className={classes.root} style={props.style} >
             <div className={classes.thumbnail} style={props.thumbnailStyle}>
                 <img className={classes.img} src={props.thumbnail || fakeImg} alt="thumbnail" />
-                <Fab size="small" className={classes.fab}>
-                    <PlayArrow />
-                </Fab>
+                <Link to={`/videoPlay/${props.id}`}>
+                    <Fab size="small" className={classes.fab}>
+                        <PlayArrow />
+                    </Fab>
+                </Link>
             </div>
             <div className={classes.footer}>
                 <Typography style={{ padding: '8px 10px' }} variant="subtitle1" noWrap>{props.title || 'This is a temporary title for a temporary video'}</Typography>

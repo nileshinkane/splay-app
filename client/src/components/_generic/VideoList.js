@@ -12,7 +12,7 @@ import SearchBox from '../_generic/SearchBox';
 import DialogBox from './DialogBox';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import theme from '../../theme/index';
-
+import { Link } from 'react-router-dom';
 import isAuthenticated from '../_methods/isAuthenticated';
 
 const useStyles = makeStyles(theme => ({
@@ -198,12 +198,15 @@ const VideoList = (props) => {
                                                 thumbnail={photoUrl(current._id, current.photo) || gym}
                                                 title={current.title}
                                                 postedBy={current.postedBy}
+                                                id={current._id}
                                             />
                                         </Paper>
                                         {
                                             isAuthenticated() && (
                                                 <div className={classes.editStyles}>
-                                                    <Button style={{ backgroundColor: theme.palette.primary.main }} size="small">Edit</Button>
+                                                    <Link to={`/video/${current._id}`} style={{ textDecoration: 'none' }} >
+                                                        <Button style={{ backgroundColor: theme.palette.primary.main }} size="small">Edit</Button>
+                                                    </Link>
                                                     <Button style={{ backgroundColor: theme.palette.error.main, marginLeft: '10px' }} onClick={(e) => handleDialog(e, current._id)} size="small">Delete</Button>
                                                 </div>
                                             )
@@ -268,13 +271,13 @@ const Loader = () => {
     )
 }
 
-function LoadingSkeleton() {
-    return (
-        <>
-            {renderSkeleton(3)}
-        </>
-    )
-}
+// function LoadingSkeleton() {
+//     return (
+//         <>
+//             {renderSkeleton(3)}
+//         </>
+//     )
+// }
 
 function VideoListSkeleton() {
     return (

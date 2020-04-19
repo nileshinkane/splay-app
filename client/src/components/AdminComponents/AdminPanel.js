@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import SideComponent from '../_generic/SideComponent';
 // import SearchBox from '../_generic/SearchBox';
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import CustomSnackbar from '../_generic/Snackbar';
 import { SnackbarContext } from '../../Contexts/SnackbarContext';
 // import VideoList from '../_generic/VideoList';

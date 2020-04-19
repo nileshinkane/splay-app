@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema;
+
 
 
 const videoSchema = new mongoose.Schema({
@@ -30,6 +32,9 @@ const videoSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    updated: {
+        type: Date
+    },
     photo: {
         data: Buffer,
         contentType: String
@@ -40,7 +45,8 @@ const videoSchema = new mongoose.Schema({
     created: {
         type: Date,
         default: Date.now
-    }
+    },
+    likes: [{ type: ObjectId, ref: "User" }]
 })
 
 module.exports = mongoose.model("Video", videoSchema);

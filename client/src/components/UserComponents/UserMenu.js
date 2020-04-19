@@ -110,12 +110,11 @@ export default function AdminMenu() {
                             <Paper elevation={1} variant="outlined">
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                        <Link to="/adminPanel" style={linkStyles}>
+                                        <Link to="/" style={linkStyles}>
                                             <MenuItem onClick={handleClose}>
-                                                Dashboard
+                                                Profile
                                             </MenuItem>
                                         </Link>
-                                        <MenuItem onClick={handleClose}>My account</MenuItem>
                                         <MenuItem onClick={handleLogOut}>Logout</MenuItem>
                                     </MenuList>
                                 </ClickAwayListener>

@@ -1,12 +1,12 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 // import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles(theme => ({}));
+// const useStyles = makeStyles(theme => ({}));
 
 
 function DeptAbout() {
-    const classes = useStyles();
+    // const classes = useStyles();
     return (
         <React.Fragment>
             <h1 style={{ fontFamily: "Playfair display", color: "white" }}>About</h1>

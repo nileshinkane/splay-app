@@ -46,6 +46,16 @@ function DeptName(props) {
     cseit : param === 'electrical' ?
       electrical : param === 'mechanical' ? mechanical : param === 'ash' ? ash : ''
 
+
+  const printName = () => {
+    if (props.match.params.deptName === 'cseit') return 'Computer Sciences and Information Technology'
+    else if (props.match.params.deptName === 'electronics') return 'Electronics and Telecommunication'
+    else if (props.match.params.deptName === 'electrical') return 'Electrical, Electronics and Power'
+    else if (props.match.params.deptName === 'mechanical') return 'Mechanical'
+    else if (props.match.params.deptName === 'ash') return 'Applied Sciences and Humanities'
+    else return 'Misc'
+  }
+
   return (
     <React.Fragment>
       <div>
@@ -57,18 +67,10 @@ function DeptName(props) {
               </div>
             </div>
           </Grid>
-          <Grid item sm={7} xs={12} style={{ color: "white" }}>
+          <Grid alignItems="center" justify="center" container item sm={7} xs={12} style={{ color: "white" }}>
             <p className={classes.deptName}>
-              {props.match.params.deptName.toUpperCase() === 'ASH' ? 'Applied Sciences & Humanities' : props.match.params.deptName.toUpperCase()}
-            </p>
-            <p
-              style={{
-                margin: "25px 15px 0px 0px",
-                textAlign: "justify",
-                fontSize: "17px"
-              }}
-            >
-              {props.intro}
+              {/* {props.match.params.deptName.toUpperCase() === 'ASH' ? 'Applied Sciences & Humanities' : props.match.params.deptName.toUpperCase()} */}
+              {printName()}
             </p>
           </Grid>
         </Grid>
@@ -79,3 +81,4 @@ function DeptName(props) {
 }
 
 export default DeptName;
+

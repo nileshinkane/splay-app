@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { Box, Button, IconButton } from '@material-ui/core';
@@ -6,7 +6,9 @@ import { Box, Button, IconButton } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 import AdminMenu from './AdminComponents/AdminMenu';
+import UserMenu from './UserComponents/UserMenu';
 import isAuthenticated from './_methods/isAuthenticated';
+import isUserAuthenticated from './_methods/isUserAuthenticated';
 
 
 const useStyles = makeStyles(theme => ({
@@ -97,9 +99,10 @@ function Navbar(props) {
                     </Link>
                     {
                         isAuthenticated() ? <AdminMenu /> :
-                            <Link className={classes.centerLink} style={{ textDecoration: 'none' }} to="/login">
-                                <Button variant="text">Login</Button>
-                            </Link>
+                            isUserAuthenticated() ? <UserMenu /> :
+                                <Link className={classes.centerLink} style={{ textDecoration: 'none' }} to="/login">
+                                    <Button variant="text">Login</Button>
+                                </Link>
                     }
                 </Box>
             </div>

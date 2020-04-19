@@ -38,16 +38,12 @@ app.use(function (err, req, res, next) {
 });
 
 
-
-
 //Database initialization 
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/splayDB', {
     useNewUrlParser: true,
     useCreateIndex: true
 })
-
-
 
 const port = process.env.PORT || 5000;
 

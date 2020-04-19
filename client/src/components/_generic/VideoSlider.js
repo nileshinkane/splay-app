@@ -4,8 +4,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
-
 // const useStyles = makeStyles(theme => ({
 //     box: {
 //         height: '90px',
@@ -23,13 +21,13 @@ export default function VideoSlider(props) {
 
     const [temp, setTemp] = useState(false)
     useEffect(() => {
-        if (props.children.length >= 4) {
+        if (props.children.length >= 5) {
             setTemp(true)
         }
         else {
             setTemp(false)
         }
-    }, [])
+    }, [setTemp, props.children.length])
 
 
     // const classes = useStyles()

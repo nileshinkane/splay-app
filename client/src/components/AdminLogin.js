@@ -9,7 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import adminLoginImage from '../images/admin-login.svg';
 import { Redirect } from 'react-router-dom';
 import CustomSnackbar from './_generic/Snackbar';
-import { AdminContext } from '../Contexts/AdminContext';
+import { UserContext } from '../Contexts/UserContext';
 
 
 const useStyles = makeStyles(theme => ({
@@ -68,13 +68,14 @@ const useStyles = makeStyles(theme => ({
 const AdminLogin = (props) => {
     const classes = useStyles();
 
-    const { setAdmin } = useContext(AdminContext);
+    const { setUser } = useContext(UserContext);
 
     const [values, setValues] = React.useState({
         username: "",
         password: "",
         error: "",
         redirect: false,
+        userRedirect: false,
         showPassword: false,
         loading: false
     });
@@ -117,7 +118,6 @@ const AdminLogin = (props) => {
     }
 
 
-
     const handleSubmit = event => {
         event.preventDefault();
         const { username, password } = values;
@@ -133,8 +133,20 @@ const AdminLogin = (props) => {
             }
             else {
                 authenticate(data, () => {
-                    setAdmin(data)
-                    setValues({ redirect: true })
+                    setUser(data)
+                    if (data.user.type === 'admin') {
+                        setValues({
+                            ...values,
+                            redirect: true
+                        })
+                    }
+                    else if (data.user.type === 'user') {
+                        setValues({
+                            ...values,
+                            userRedirect: true
+                        })
+                    }
+
                 })
             }
         })
@@ -145,8 +157,11 @@ const AdminLogin = (props) => {
 
 
     //Render the Components - AdminLogin or Profile Page
-    if (values.redirect) {
+    if (values.redirect === true) {
         return <Redirect to="/adminPanel"></Redirect>
+    }
+    if (values.userRedirect === true) {
+        return <Redirect to="/"></Redirect>
     }
 
     return (

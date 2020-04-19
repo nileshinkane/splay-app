@@ -1,5 +1,5 @@
 const express = require('express');
-const { signup, signin, signout } = require('../controllers/auth');
+const { signup, signin, signout, addBatch } = require('../controllers/auth');
 const { adminById } = require('../controllers/admin');
 
 
@@ -12,6 +12,8 @@ const router = express.Router();
 router.post('/signup', signup);
 router.post('/signin', signin);
 router.get('/signout', signout);
+
+router.post('/addBatch', addBatch)
 
 //if any route contains adminId param, our app will run adminById method
 router.param("adminId", adminById);

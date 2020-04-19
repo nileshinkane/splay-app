@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import './App.css';
-import Navbar from './components/Navbar';
+// import Navbar from './components/Navbar';
 import BottomNav from './components/BottomNav';
 import Sidebar from './components/Sidebar/Sidebar';
 
 
 import Routes from './routes/index';
 
-import { AdminContext } from './Contexts/AdminContext';
+import { UserContext } from './Contexts/UserContext';
 import { SnackbarContext } from './Contexts/SnackbarContext';
 import { DialogBoxContext } from './Contexts/DialogBoxContext';
 
 
 function App() {
-  const getAdmin = () => localStorage.getItem('jwt') ? JSON.parse(localStorage.getItem('jwt')) : null
-  const [admin, setAdmin] = useState(getAdmin())
+  const getUser = () => localStorage.getItem('jwt') ? JSON.parse(localStorage.getItem('jwt')) : null
+  const [user, setUser] = useState(getUser())
   const [snackbar, setSnackbar] = useState(null)
   const [dialog, setDialog] = useState(false)
 
@@ -23,7 +23,7 @@ function App() {
     <div className="App" style={{ paddingBottom: '20px' }}>
       <Router>
         <div>
-          <AdminContext.Provider value={{ admin, setAdmin }}>
+          <UserContext.Provider value={{ user, setUser }}>
             <SnackbarContext.Provider value={{ snackbar, setSnackbar }}>
               <DialogBoxContext.Provider value={{ dialog, setDialog }}>
                 <Sidebar />
@@ -33,7 +33,7 @@ function App() {
                 </Switch>
               </DialogBoxContext.Provider>
             </SnackbarContext.Provider>
-          </AdminContext.Provider>
+          </UserContext.Provider>
         </div>
       </Router>
 

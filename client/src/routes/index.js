@@ -16,6 +16,7 @@ import Department from '../components/Department/Department'
 import Navbar from '../components/Navbar';
 import VideoCard from '../components/_generic/VideoCard';
 import Search from '../components/Search';
+import UpdateVideoForm from '../components/AdminComponents/Forms/UpdateVideoForm';
 
 // import PrivateRoute from '../components/_generic/PrivateRoute'
 
@@ -26,9 +27,10 @@ const Routes = () => {
             <Route to="/" component={Navbar} />
             <Route exact path="/" component={IndexComponent} />
             <Route exact path="/login" component={AdminLogin} />
-            <Route path="/v" component={VideoPlay} />
+            <Route path="/videoPlay/:id" component={VideoPlay} />
             <Route path="/it" component={It} />
             <Route path="/dept/:deptName" component={Department} />
+            <Route path="/video/:videoId" component={UpdateVideoForm} />
             <Route path="/search" component={Search} />
 
 
@@ -50,13 +52,6 @@ export default Routes;
 
 
 
-const Seach = (props) => {
-    return (
-        <SideComponent>
-            <div style={{ color: 'white' }}>{props.match.params.passed.split("+").join(" ")}</div>
-        </SideComponent>
-    )
-}
 const It = () => {
     return (
         <SideComponent>

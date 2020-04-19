@@ -19,10 +19,7 @@ import VideoCard from '../../_generic/VideoCard';
 import CustomSnackbar from '../../_generic/Snackbar';
 import SideComponent from '../../_generic/SideComponent';
 import { SnackbarContext } from '../../../Contexts/SnackbarContext';
-import { UserContext } from '../../../Contexts/UserContext';
-
-
-
+import gym from '../../../images/gym.jpg';
 
 
 function getSteps() {
@@ -40,15 +37,22 @@ const buttonStyles = {
     marginTop: marginBetween,
 }
 let videoData = {}; // empty object for FormData API
-export default function AddVideoForm () {
+
+let videoId;
+const photoUrl = (id, photo) => {
+    const thumb = `${process.env.REACT_APP_API_URL}/video/photo/${id}`;
+    return photo ? thumb : gym
+}
+
+export default function UpdateVideoForm (props) {
+     videoId = props.match.params.videoId;
     
     let steps = getSteps()
     const {snackbar, setSnackbar} = useContext(SnackbarContext);
-    const {user} = useContext(UserContext);
-
 
     const [state, setState] = useState ({
             activeStep: 0,
+            _id:'',
             title: '',
             department : '',
             link: '',
@@ -56,6 +60,7 @@ export default function AddVideoForm () {
             photo: '',
             postedBy: '',
             imagePreview: '',
+            imageFetched : false,
             featured : false,
             departmentFeatured : false,
             fileSize: 0,
@@ -63,11 +68,41 @@ export default function AddVideoForm () {
 
     useEffect(()=>{
         videoData = new FormData();
-
+        fetch(`${process.env.REACT_APP_API_URL}/video/${videoId}`, {
+            method: 'GET'
+        })
+        .then((response)=>{
+            return response.json()
+        })
+        .then((data)=>{
+            setState({
+                ...state,
+                _id : data._id,
+                title: data.title,
+                description: data.description,
+                department: data.department,
+                featured: data.featured,
+                departmentFeatured: data.departmentFeatured,
+                link: data.link,
+                photo : data.photo,
+                imageFetched: true,
+                postedBy: data.postedBy,
+            })
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+            
+        const thumb = `/video/photo/${videoId}`;
+        setState({
+            ...state,
+            imageFetched : thumb
+        })
         return ()=>{
             setSnackbar('')
         }
-    },[setSnackbar])
+    },[setSnackbar,state])
+
 
     const isValid = () => {
         const { title, description, fileSize, link } = state;
@@ -114,6 +149,12 @@ export default function AddVideoForm () {
 
     const handleChange = name => e => {
         const value = name === 'photo' ? e.target.files[0] : e.target.value
+        if(name === 'photo'){
+            setState({
+                ...state,
+                imageFetched: false
+            })
+        }
         const fileSize = name === 'photo' ? e.target.files[0].size : 0
         videoData.set(name, value)
         setState({ ...state, [name]: value, fileSize })
@@ -132,6 +173,7 @@ export default function AddVideoForm () {
     }
 
    
+   
     const nextStep = () => {
         setState({
             ...state,
@@ -145,6 +187,24 @@ export default function AddVideoForm () {
             activeStep: state.activeStep - 1
         })
     }
+    // Update Video Function
+
+    const updateVideo = videoParam => {
+        return fetch(`${process.env.REACT_APP_API_URL}/video/${videoId}`, {
+            method: "PUT",
+            headers: {
+                Accept: "application/json",
+            },
+            body: videoParam
+        })
+            .then((response) => {
+                return response.json()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
 
     const handleSubmit = () => {
 
@@ -155,17 +215,11 @@ export default function AddVideoForm () {
                 photo: '',postedBy: '',imagePreview: '',error: '', featured:false, departmentFeatured:false
             })
             
-            
-            submitVideo(videoData, user.token ).then((data) => {
-                if(data.error){
-                    setSnackbar({ ...snackbar, date: new Date(), msg: data.error, severity: 'error' })
-                }
-                else{
-                    setSnackbar({ ...snackbar, date: new Date(), msg: 'Video Uploaded', severity: 'success' })
-                }
-            })
-            .catch((err)=> {
+            updateVideo(videoData).then((data) => {
+                setSnackbar({ ...snackbar, date: new Date(), msg: 'Video Updated', severity: 'success' })
                 
+            })
+            .catch(()=> {
                 setSnackbar({ ...snackbar, date: new Date(), msg: 'Video not Uploaded', severity: 'error' })
             })
         }
@@ -205,7 +259,7 @@ export default function AddVideoForm () {
                                     <Button variant="contained" color="primary"
                                         onClick={state.activeStep === steps.length - 1 ? handleSubmit : nextStep}
                                     >
-                                        {state.activeStep === steps.length - 1 ? 'Submit Video' : 'Next'}
+                                        {state.activeStep === steps.length - 1 ? 'Update Video' : 'Next'}
                                     </Button>
                                 </div>
                             </div>
@@ -222,26 +276,6 @@ export default function AddVideoForm () {
 
 
 
-// Submit Video Function
-
-const submitVideo = (videoParam, token) => {
-
-    return fetch(`${process.env.REACT_APP_API_URL}/submitVideo`, {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`
-        },
-        body: videoParam
-    })
-        .then((response) => {
-            return response.json()
-            
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-}
 
 
 function TitleAndDesc(props) {
@@ -344,7 +378,28 @@ function LinkAndThumb(props) {
                     </Button>
                 </label>
                 <p style={{ fontSize: '0.8rem', color: 'gray' }}>Always upload thumbnails in 16:9 ratio </p>
-                {props.inputValues.imagePreview && <img style={{ width: '100%', marginTop: marginBetween }} alt="temporary display" src={props.inputValues.imagePreview} /> }
+
+                {/* New Thumbnail */}
+                {props.inputValues.imagePreview && <p style={{ fontSize: '1rem', color: 'white', textAlign:'center' }}>New Thumbnail </p> }   
+                {props.inputValues.imagePreview && <img style={{ width: '100%', marginTop: marginBetween }} alt="temporary display" src={props.inputValues.imagePreview} />}
+
+                {/* Old thumbnail */}
+                {props.inputValues.imageFetched && <p style={{ fontSize: '1rem', color: 'white', textAlign: 'center' }}>Old Thumbnail </p>}   
+                {props.inputValues.imageFetched === true && <img style={{ width: '100%', marginTop: marginBetween }} alt="temporary display" src={photoUrl(videoId, props.inputValues.photo)} />}
+                   
+                   
+                    
+
+                    
+                
+                {/* {props.inputValues.imagePreview || props.inputValues.imageFetched && 
+                (<img 
+                    style={{ 
+                        width: '100%', 
+                        marginTop: marginBetween 
+                    }} 
+                    alt="temporary display" 
+                    src={props.inputValues.imagePreview || photoUrl(videoId, props.inputValues.photo)} />) } */}
             </FormControl>
         </>
     )
@@ -363,7 +418,9 @@ function DemoCard(props) {
                                 thumbnailStyle={{ border: 'solid 1px silver' }} 
                                 style={{ width: '300px', margin: 'auto' }} 
                                 title={props.inputValues.title} 
-                                thumbnail={props.inputValues.imagePreview} 
+                                thumbnail={
+                                    props.inputValues.imagePreview
+                                } 
                                 postedBy={props.inputValues.postedBy}
                             />
                         </>

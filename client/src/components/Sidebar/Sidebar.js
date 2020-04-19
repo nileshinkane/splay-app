@@ -14,6 +14,9 @@ import Divider from '@material-ui/core/Divider';
 import isAuthenticated from '../_methods/isAuthenticated';
 import AdminSidebar from '../AdminComponents/AdminSidebar';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+// import UserMenu from '../UserComponents/UserMenu';
+
+// import isUserAuthenticated from '../_methods/isUserAuthenticated';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -127,6 +130,7 @@ function Sidebar() {
                         isAuthenticated() ? (<AdminSidebar />)
                             : ('')
                     }
+
 
                 </div>
 

@@ -128,7 +128,7 @@ function IndexComponent() {
                                 <Button style={{ padding: '5px 10px', marginTop: '10px' }} variant="contained" size="small">Upload Now</Button>
                             </div>
                             <div className={classes.heroRight}>
-                                <img className={classes.welcomeImage} src={welcome} alt="splay hero image" />
+                                <img className={classes.welcomeImage} src={welcome} alt="splay hero" />
                             </div>
                         </div>
                     </Grid>

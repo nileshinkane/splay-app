@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import SideComponent from './_generic/SideComponent';
 import { makeStyles } from '@material-ui/core/styles'
 import VideoCard from './_generic/VideoCard';

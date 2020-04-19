@@ -5,15 +5,15 @@ import DeptFeatured from "./DeptFeatured";
 import DeptAbout from "./DeptAbout";
 import Skeleton from '@material-ui/lab/Skeleton';
 import { Grid } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 
 
-const useStyles = makeStyles(theme => ({
-    fullWH: {
-        height: '100%',
-        width: '100%'
-    }
-}))
+// const useStyles = makeStyles(theme => ({
+//     fullWH: {
+//         height: '100%',
+//         width: '100%'
+//     }
+// }))
 
 
 
@@ -42,7 +42,7 @@ function Department(props) {
 
     }, [props.match.params.deptName]);
 
-    console.log('saflfaj')
+
     return (
         <SideComponent>
             {state ? <DeptName intro={state.dept.description}  {...props} /> : <DeptNameSkeleton />}
