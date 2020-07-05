@@ -1,17 +1,22 @@
-*{
+* {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   margin-bottom: 30px;
   /* min-height: 100vh; */
   /* background-color: rgb(243, 243, 243); */
   background-color: #1d2237;
-  font-family: Roboto, sans-serif;
-  /* overflow-x: hidden; */
+  font-family: "CircularStd", sans-serif;
+  overflow-x: hidden;
 }
 
-::-webkit-scrollbar{
+#root {
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-thumb {
@@ -19,35 +24,33 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  
   background-color: #121522;
-} 
+}
 
-.iframe-container {
+/* .iframe-container {
   position: relative;
   width: 100%;
   padding-bottom: 56.25%;
-  height:0;
+  height: 0;
   flex: 5;
-}
+} */
 input {
   color: white !important;
 }
 
-.slick-dots li button:before{
-    color: gray !important;
-  }
-
+.slick-dots li button:before {
+  color: gray !important;
+}
+/* 
 .iframe-container iframe {
   position: absolute;
   top: 0;
   left: 0;
-  width : 100%;
+  width: 100%;
   height: 70%;
-}
+} */
 
-
- /* label.Mui-focused {
+/* label.Mui-focused {
     color: #426dd1 !important;
 };
  .MuiInput-underline:after {
@@ -71,17 +74,15 @@ input {
 }
  */
 
-
-
 /* Media Queries */
 
-@media screen and (max-width: 960px) {
+/* @media screen and (max-width: 960px) {
   .iframe-container iframe {
     height: 100%;
   }
-}
+} */
 
 /* MUI OVERRIDES */
-.MuiTypography-body1{
+.MuiTypography-body1 {
   font-size: 0.86rem !important;
 }
