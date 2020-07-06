@@ -18,7 +18,7 @@ const router = express.Router();
 router.put("/video/like", requireSignin, videoController.like);
 router.put("/video/unlike", requireSignin, videoController.unlike);
 
-router.get("/", requireSignin, videoController.getRecommendations);
+router.get("/", videoController.getRecommendations);
 router.get("/getFeatured", getFeaturedVideos);
 router.get("/getVideosData", getVideosData);
 router.get("/hello", testController.getTestOne);
